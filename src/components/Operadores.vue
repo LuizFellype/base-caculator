@@ -9,7 +9,7 @@
     </div>
 
     <div class="d-flex f-dir-col justify-center align-center">
-      <div class="d-flex justify-center align-center ">
+      <div class="d-flex justify-between align-center w-213 ">
         <div class="d-flex p-15">
           <template v-for="(value, i) in values" :key="i">
             <input type="radio" :id="`value1-${value.id}`" v-model="value1" :value="value.id">
@@ -69,7 +69,7 @@ export default {
        [operators['^']]: () => !!(value1 && value2), 
        [operators['v']]:  () => !!(value1 || value2),
        [operators['#']]: () => (value1 && value2) || (!value1 && !value2) ? false : true, 
-       [operators['->']]: () => !value1 && value2 ? false : true, 
+       [operators['->']]: () => !(value1 && !value2), 
        [operators['<->']]: () => !!(value1 ? value2 : !value2), 
       }
       const result = checkByOp[selectedOperator]()
@@ -87,6 +87,10 @@ export default {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     text-align: initial;
+    width: 373px;
+  }
+  .w-213 {
+    width: 213px;
   }
 
 </style>
