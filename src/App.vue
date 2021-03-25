@@ -1,54 +1,67 @@
 <template>
-  <div class="two-blocks-wrapper d-flex justify-around f-wrap">
-    <form class="convert-block" @change="handleConvertSubmit($event)">
+  <div class="app-wrapper d-flex justify-around f-wrap">
+    <div class="content-spaces">  
       <h2>CONVERTER</h2>
-      <div class="d-flex justify-between">
-        <label for="2">Binário</label>
-        <input type="number" v-model="binary" id="2">
-      </div>
-      <div class="d-flex justify-between">
-        <label for="8">Octadecimal</label>
-        <input type="number" v-model="octal" id="8">
-      </div>
-      <div class="d-flex justify-between">
-        <label for="10">Decimal</label>
-        <input type="number" v-model="dec" id="10">
-      </div>
-      <div class="d-flex justify-between">
-        <label for="16">Hexadecimal</label>
-        <input type="text" v-model="hexa" id="16">
-      </div>
-    </form>
+      <form class="card" @change="handleConvertSubmit($event)">
+        <div class="d-flex justify-between align-center">
+          <label for="2">Binário</label>
+          <input class='input' type="number" v-model="binary" id="2">
+        </div>
+        <div class="pt-10 d-flex justify-between align-center">
+          <label for="8">Octadecimal</label>
+          <input class='input' type="number" v-model="octal" id="8">
+        </div>
+        <div class="pt-10 d-flex justify-between align-center">
+          <label for="10">Decimal</label>
+          <input class='input' type="number" v-model="dec" id="10">
+        </div>
+        <div class="pt-10 d-flex justify-between align-center">
+          <label for="16">Hexadecimal</label>
+          <input class='input' type="text" v-model="hexa" id="16">
+        </div>
+      </form>
+    </div>
 
-    <div class="sum-wrapper">
+    <div class="content-spaces">
       <h2>SOMAR</h2>
-      <select name="bases" id="bases" v-model="base">
-        <option value="2">Binario</option>
-        <option value="8">Octal</option>
-        <option value="10">Decimal</option>
-        <option value="16">Hexa</option>
-      </select>
+    <div class="sum-wrappers card">
+      <div class="d-flex justify-center">
+        <select class="input" name="bases" id="bases" v-model="base">
+          <option value="2">Binario</option>
+          <option value="8">Octal</option>
+          <option value="10">Decimal</option>
+          <option value="16">Hexa</option>
+        </select>
+      </div>
 
-      <form class="sum-fields d-flex justify-center" @change="handleBaseSum"> 
-        <h3>+</h3>
+      <form class="pt-10 d-flex justify-center" @change="handleBaseSum"> 
+        <h3 class="m-reset as-end pr-10">+</h3>
         <div class="d-flex f-dir-col">
-          <input type="text" v-model="n1">
-          <input type="text" v-model="n2" >
+          <input class='input mt-10 mb-10' type="text" v-model="n1">
+          <input class='input' type="text" v-model="n2" >
         </div>
         
       </form>
       <span>{{ sumResult }}</span>
     </div>
+    </div>
+
+    <div class="content-spaces">
+      <Operadores />
+    </div>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import Operadores from './components/Operadores.vue'
 import bases from 'base-converter'
 import { sumBase } from './helpers/sum.js'
 
 export default {
   name: 'App',
+  components: {
+    Operadores,
+  },
   data() {
     return {
       binary: '',
@@ -130,20 +143,56 @@ export default {
 </script>
 
 <style>
+body {
+  background: #d2bf9e;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
-.two-blocks-wrapper {
+.input {
+    background: 0 0;
+    border: 2px solid #41403e;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    color: #41403e;
+    display: block;
+    font-size: 1rem;
+    outline: 0;
+    padding: .5rem;
+    margin-left: 5px;
+}
+.app-wrapper {
   max-width: 1100px;
   margin: auto;
 }
-.sum-fields {
+.pt-10 {
   padding-top: 10px;
+}
+.p-15 {
+  padding: 15px;
+}
+.pr-10 {
+  padding-right: 10px;
+}
+.mt-17 {
+  margin-top: 17px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.m-auto {
+  margin: auto;
 }
 
 .d-flex {
@@ -165,4 +214,52 @@ export default {
 .justify-center {
   justify-content: center;
 }
+.align-center {
+  align-items: center;
+}
+.as-end {
+  align-self: flex-end;
+}
+.m-reset {
+  margin: 0px;
+} 
+.content-spaces {
+  margin-top: 20px;
+}
+
+.border {
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  border: 2px solid #41403e
+}
+.note {
+  background-color: #e6ddd0;
+  padding: 1em;
+  margin-bottom: 3em;
+}
+.full-rotate {
+  margin: auto;
+  /* width: 80vw; */
+  /* max-width: 40em; */
+  transform: rotate(-3deg);
+}
+.card { /* card, note, full-rotate */
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  border: 2px solid #41403e;
+
+  background-color: #e6ddd0;
+  padding: 1em;
+  margin-bottom: 3em;
+
+  margin: auto;
+  /* width: 80vw; */
+  /* max-width: 40em; */
+  transform: rotate(-3deg);
+}
+
 </style>
