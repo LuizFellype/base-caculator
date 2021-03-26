@@ -26,7 +26,8 @@
           </template>
         </div>
       </div>
-      <h3>{{result}}</h3>
+      
+      <h3 class='result'>{{result}}</h3>
     </div>
   </form>
 </template>
@@ -44,11 +45,11 @@ export default {
   data() {
     return {
       operators: [
-        { id: operators['^'], label: '^ (E)' },
-        { id: operators['v'], label: 'v (OU inclusivo)' },
-        { id: operators['#'], label: '# (OU exclusivo)' },
-        { id: operators['->'], label: '-> (Condicional)' },
-        { id: operators['<->'], label: '<-> (Bicondicional)' },
+        { id: operators['^'], label: '^ (E)', link: 'https://www.flaticon.com/br/premium-icon/icons/svg/3512/3512324.svg' },
+        { id: operators['v'], label: 'v (OU inclusivo)', link: 'https://www.flaticon.com/br/premium-icon/icons/svg/3512/3512387.svg' },
+        { id: operators['#'], label: '# (OU exclusivo)', link: 'https://www.flaticon.com/br/premium-icon/icons/svg/3512/3512522.svg' },
+        { id: operators['->'], label: '-> (Condicional)', link: '' },
+        { id: operators['<->'], label: '<-> (Bicondicional)', link: '' },
       ],
       selectedOperator: '^',
 
