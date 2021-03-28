@@ -60,6 +60,10 @@
     <div class="content-spaces">
       <ExcessOf />
     </div>
+
+    <div class="content-spaces">
+      <FloatinPoint />
+    </div>
   </div>
 </template>
 
@@ -68,12 +72,14 @@ import Operadores from './components/Operadores.vue'
 import bases from 'base-converter'
 import { sumBase } from './helpers/sum.js'
 import ExcessOf from './components/ExcessOf.vue'
+import FloatinPoint from './components/FloatinPoint.vue'
 
 export default {
   name: 'App',
   components: {
     Operadores,
     ExcessOf,
+    FloatinPoint,
   },
   data() {
     return {
