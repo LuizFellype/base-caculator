@@ -10,30 +10,46 @@
 
         <div class="pt-10 inline-between">
             <label for="result">Flutuante:</label>
-            <input class='input' type="text" v-model="result" id="result" disabled>
+            <input class='input' type="text" v-model="result" id="result" >
         </div>
-
+        
+        <div class="pt-10 inline-center" v-if="resultFrac">
+            <h3 class='result'>{{resultFrac}}</h3>
+        </div>
     </div>
   </form>
 </template>
 
 <script>
-import { floatinPoint } from "../helpers/floatinPoint";
+import { floatinPoint, binToDec } from "../helpers/floatinPoint"
+
 export default {
     name: 'FloatinPoint',
     data() {
         return {
             result: '',
             base8: '',
+            resultFrac: '',
         }
     },
     methods: {
         handleEnter() {
-            // if (!this.excess || !this.numberToFind) return
+            // 00111100
+            const shouldReturn = !this.base8 || this.base8?.length !== 8
             
-            const { bin } = floatinPoint(this.base8)
+            if (shouldReturn) {
+                if (!this.result) return
+                const resultFrac = binToDec(this.result)
+                this.resultFrac = resultFrac
+                return 
+            }
+            
+            const { bin, isPositive } = floatinPoint(this.base8)
             this.result = bin
-            // this.resultBase = baseOf
+            
+            const resultFrac = binToDec(bin)
+            
+            this.resultFrac =  `${isPositive ? '' : '-'}${resultFrac}`
         }
     }
 }

@@ -13,12 +13,20 @@
         </div>
         <div class="pt-10 inline-between">
           <label for="10">Decimal</label>
-          <input class='input' type="number" v-model="dec" id="10">
+          <input class='input' type="text" v-model="dec" id="10">
         </div>
         <div class="pt-10 inline-between">
           <label for="16">Hexadecimal</label>
           <input class='input' type="text" v-model="hexa" id="16">
         </div>
+        <div class="pt-10 inline-between">
+          <label for="floatBin">Binário flutuante</label>
+          <input class='input' type="number" v-model="floatBin" id="floatBin">
+        </div>
+
+        <!-- <div class="pt-10 inline-center" v-if="floatResult">
+          <h3 class='result'>{{floatResult}}</h3>
+        </div> -->
       </form>
     </div>
 
@@ -71,6 +79,7 @@
 import Operadores from './components/Operadores.vue'
 import bases from 'base-converter'
 import { sumBase } from './helpers/sum.js'
+import { binToDec } from './helpers/floatinPoint.js'
 import ExcessOf from './components/ExcessOf.vue'
 import FloatinPoint from './components/FloatinPoint.vue'
 
@@ -87,6 +96,8 @@ export default {
       octal: '',
       dec: '',
       hexa: '',
+      floatBin: '',
+      // floatResult: '',
 
       base: '2',
       n1: '',
@@ -104,6 +115,12 @@ export default {
     handleConvertSubmit(ev) {
       ev.preventDefault()
       const { id, value } = ev.target
+      if (id === 'floatBin') {
+        const decFrac = binToDec(value)
+        // this.floatResult = decFrac
+        this.dec = decFrac
+        return 
+      }
       const convertByBase = {
         2: () => {
           const dec = bases.binToDec(value)
@@ -144,6 +161,7 @@ export default {
       }
       
       convertByBase[id]()
+      this.floatBin = ''
     },
 
     handleBaseSum(ev) {
@@ -171,6 +189,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding-bottom: 50px
   /* margin-top: 60px; */
 }
 .input {
@@ -271,6 +290,11 @@ body {
 .inline-around { 
   display: flex;
   justify-content: space-around;
+  align-items: center;
+}
+.inline-center { 
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
