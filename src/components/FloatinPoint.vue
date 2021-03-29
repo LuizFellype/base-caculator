@@ -1,5 +1,5 @@
 <template>
-  <h2>PADRÃO BITS -> FLUTUANTE</h2>
+  <h2>PONTO FLUTUANTE -> BIN</h2>
   <form @change="handleEnter" class="card">
       <div class="d-flex f-dir-col">
 
