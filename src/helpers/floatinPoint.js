@@ -44,3 +44,30 @@ export const binToDec = (bin) => {
         return bases.binToDec(binSplitted[0])
     }
 }
+
+
+export const binToFloatinPoint = (binFrac, positive = true) => {
+    const base = positive ? '0' : '1'
+    const idxFirst1 = binFrac.indexOf('1')
+    const idxDot = binFrac.indexOf('.')
+    const cleanBinFrac = binFrac.replace('.', '')
+    const slicedToMantissa = cleanBinFrac.slice((idxFirst1 === 0 ? 1 : idxFirst1) - 1)
+    const mLen = slicedToMantissa.length
+    
+    const diff = 4 - mLen
+    
+    const mantissa = mLen <= 4 ? `${slicedToMantissa}${'0'.repeat(diff)}` : slicedToMantissa.slice(0, 4)
+    
+    const idxDiff = idxDot - idxFirst1
+    const binToFindInExcessOf4 = idxDiff > 0 ? idxDiff : idxDiff + 1
+    const numberToFindBin = binToFindInExcessOf4 >= 0 ? 4 + binToFindInExcessOf4 : 4 - (binToFindInExcessOf4 * -1)
+    const bin = bases.decToBin(numberToFindBin)
+    const binLen = bin.length
+
+    const exp = 3 - binLen > 0 ? `${'0'.repeat(3 - binLen)}${bin}` : bin
+    
+    // console.log({  idxFirst1, idxDot, cleanBinFrac, slicedToMantissa, mantissa })
+    // console.log({ idxDiff, binToFindInExcessOf4, numberToFindBin, exp, binLen, })
+    // console.log('----------------------------')
+    return `${base}${exp}${mantissa}`
+}

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { floatinPoint, binToDec } from "../helpers/floatinPoint"
+import { floatinPoint, binToDec, binToFloatinPoint } from "../helpers/floatinPoint"
 
 export default {
     name: 'FloatinPoint',
@@ -33,17 +33,23 @@ export default {
         }
     },
     methods: {
-        handleEnter() {
+        handleEnter(e) {
             // 00111100
-            const shouldReturn = !this.base8 || this.base8?.length !== 8
-            
-            if (shouldReturn) {
-                if (!this.result) return
+            const { id } = e.target
+            console.log('e', e)
+            if (id === 'result') {
+                if (this.result) {
                 const resultFrac = binToDec(this.result)
+                const base8 = binToFloatinPoint(this.result)
+                this.base8 = base8
                 this.resultFrac = resultFrac
-                return 
+                return
+                }
             }
-            
+
+            const shouldReturn = !this.base8 || this.base8?.length !== 8
+            console.log({shouldReturn})
+            if (shouldReturn) return 
             const { bin, isPositive } = floatinPoint(this.base8)
             this.result = bin
             
