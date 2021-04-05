@@ -5,7 +5,7 @@
     </div>
 
     <div class="content-spaces">
-     <SumBases />
+     <Sum />
     </div>
 
     <div class="content-spaces">
@@ -26,7 +26,7 @@
 import Operadores from './components/Operadores.vue'
 import ExcessOf from './components/ExcessOf.vue'
 import FloatinPoint from './components/FloatinPoint.vue'
-import SumBases from './components/SumBases.vue'
+import Sum from './components/Sum.vue'
 import ConvertBases from './components/ConvertBases.vue'
 
 export default {
@@ -35,7 +35,7 @@ export default {
     Operadores,
     ExcessOf,
     FloatinPoint,
-    SumBases,
+    Sum,
     ConvertBases,
   },
 }
