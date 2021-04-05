@@ -1,5 +1,5 @@
 <template>
-  <h2>SOMAR</h2>
+  <h2 class='neucha'>SOMAR</h2>
   <div class="scale">
     <div class="sum-wrappers card shake">
       <div class="d-flex justify-center">

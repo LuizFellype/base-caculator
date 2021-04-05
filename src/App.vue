@@ -1,17 +1,17 @@
 <template>
   <div class="app-wrapper d-flex justify-around f-wrap">
-    <div class="content-spaces">  
+    <div class="content-spaces">
       <ConvertBases />
     </div>
 
     <div class="content-spaces">
-     <SumBases />
+      <SumBases />
     </div>
 
     <div class="content-spaces">
       <Operadores />
     </div>
-    
+
     <div class="content-spaces">
       <ExcessOf />
     </div>
@@ -23,14 +23,14 @@
 </template>
 
 <script>
-import Operadores from './components/Operadores.vue'
-import ExcessOf from './components/ExcessOf.vue'
-import FloatinPoint from './components/FloatinPoint.vue'
-import SumBases from './components/SumBases.vue'
-import ConvertBases from './components/ConvertBases.vue'
+import Operadores from "./components/Operadores.vue";
+import ExcessOf from "./components/ExcessOf.vue";
+import FloatinPoint from "./components/FloatinPoint.vue";
+import SumBases from "./components/SumBases.vue";
+import ConvertBases from "./components/ConvertBases.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Operadores,
     ExcessOf,
@@ -38,7 +38,7 @@ export default {
     SumBases,
     ConvertBases,
   },
-}
+};
 </script>
 
 <style>
@@ -51,22 +51,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  padding-bottom: 50px
+  padding-bottom: 50px;
   /* margin-top: 60px; */
 }
 .input {
-    background: 0 0;
-    border: 2px solid #41403e;
-    border-bottom-left-radius: 15px 255px;
-    border-bottom-right-radius: 225px 15px;
-    border-top-left-radius: 255px 15px;
-    border-top-right-radius: 15px 225px;
-    color: #41403e;
-    display: block;
-    font-size: 1rem;
-    outline: 0;
-    padding: .5rem;
-    margin-left: 5px;
+  background: 0 0;
+  border: 2px solid #41403e;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  color: #41403e;
+  display: block;
+  font-size: 1rem;
+  outline: 0;
+  padding: 0.5rem;
+  margin-left: 5px;
 }
 .app-wrapper {
   max-width: 1100px;
@@ -139,22 +139,22 @@ body {
 }
 .m-reset {
   margin: 0px;
-} 
+}
 .content-spaces {
   margin-top: 20px;
 }
 
-.inline-between { 
+.inline-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.inline-around { 
+.inline-around {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.inline-center { 
+.inline-center {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -165,7 +165,7 @@ body {
   border-bottom-right-radius: 225px 15px;
   border-top-left-radius: 255px 15px;
   border-top-right-radius: 15px 225px;
-  border: 2px solid #41403e
+  border: 2px solid #41403e;
 }
 .note {
   background-color: #e6ddd0;
@@ -178,7 +178,8 @@ body {
   /* max-width: 40em; */
   transform: rotate(-3deg);
 }
-.card { /* card, note, full-rotate */
+.card {
+  /* card, note, full-rotate */
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
   border-top-left-radius: 255px 15px;
@@ -210,12 +211,16 @@ body {
   display: inline-block;
   font-size: 1rem;
   outline: 0;
-  padding: .75rem;
-  background-image: linear-gradient(to bottom right, transparent -50%, #55acee4f);
+  padding: 0.75rem;
+  background-image: linear-gradient(
+    to bottom right,
+    transparent -50%,
+    #55acee4f
+  );
   position: relative;
 }
 .result::after {
-  content: '';
+  content: "";
   width: 20px;
   height: 2px;
   border-bottom: 1px solid black;
@@ -223,11 +228,11 @@ body {
   position: absolute;
   bottom: 1px;
   right: -9px;
-  transform: rotate(-50deg)
+  transform: rotate(-50deg);
 }
 
 .info {
-  color: #969085
+  color: #969085;
 }
 
 /* EFFECTS */
@@ -262,21 +267,43 @@ body {
 }
 
 .scale {
-  animation: floatingEffect .3s ease-in;
+  animation: floatingEffect 0.3s ease-in;
   backface-visibility: hidden;
 }
 
 @keyframes floatingEffect {
   0% {
-    transform: scale(0) rotateZ(360deg)
+    transform: scale(0) rotateZ(360deg);
   }
   99% {
-    transform: scale(1.1) rotateZ(0deg)
+    transform: scale(1.1) rotateZ(0deg);
   }
   100% {
-    transform: scale(1)
+    transform: scale(1);
   }
 }
 
+@font-face {
+  font-family: "Neucha";
+  src: local("Neucha"), 
+  url(./fonts/Neucha-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Patrick Hand SC";
+  src: local("Patrick Hand SC"),
+    url(./fonts/PatrickHandSC-Regular.ttf) format("truetype");
+}
 
+label {
+  font-size: 20px;
+}
+* {
+  font-family: "Neucha", sans-serif;
+  color: #41403e;
+}
+h1,
+h2,
+h3 {
+  font-family: "Patrick Hand SC", sans-serif;
+}
 </style>
