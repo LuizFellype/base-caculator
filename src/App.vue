@@ -19,6 +19,9 @@
     <div class="content-spaces">
       <FloatinPoint />
     </div>
+    <div class="content-spaces">
+      <MinMaxOf />
+    </div>
   </div>
 </template>
 
@@ -28,6 +31,7 @@ import ExcessOf from "./components/ExcessOf.vue";
 import FloatinPoint from "./components/FloatinPoint.vue";
 import SumBases from "./components/SumBases.vue";
 import ConvertBases from "./components/ConvertBases.vue";
+import MinMaxOf from "./components/MinMaxOf.vue";
 
 export default {
   name: "App",
@@ -37,6 +41,7 @@ export default {
     FloatinPoint,
     SumBases,
     ConvertBases,
+    MinMaxOf,
   },
 };
 </script>
