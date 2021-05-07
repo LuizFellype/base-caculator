@@ -22,6 +22,9 @@
     <div class="content-spaces">
       <MinMaxOf />
     </div>
+    <div class="content-spaces">
+      <RealTable />
+    </div>
   </div>
 </template>
 
@@ -32,6 +35,7 @@ import FloatinPoint from "./components/FloatinPoint.vue";
 import SumBases from "./components/SumBases.vue";
 import ConvertBases from "./components/ConvertBases.vue";
 import MinMaxOf from "./components/MinMaxOf.vue";
+import RealTable from "./components/RealTable.vue";
 
 export default {
   name: "App",
@@ -42,6 +46,7 @@ export default {
     SumBases,
     ConvertBases,
     MinMaxOf,
+    RealTable,
   },
 };
 </script>
@@ -80,8 +85,19 @@ body {
 .pt-10 {
   padding-top: 10px;
 }
+.p-5 {
+  padding: 5px;
+}
 .p-15 {
   padding: 15px;
+}
+.px-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.my-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .pr-10 {
   padding-right: 10px;
@@ -91,6 +107,9 @@ body {
 }
 .mt-10 {
   margin-top: 10px;
+}
+.ml-20 {
+  margin-left: 20px;
 }
 .mb-10 {
   margin-bottom: 10px;
@@ -125,6 +144,9 @@ body {
 }
 .justify-start {
   justify-content: flex-start;
+}
+.justify-end {
+  justify-content: flex-end;
 }
 .align-center {
   align-items: center;
@@ -165,6 +187,11 @@ body {
   align-items: center;
 }
 
+.border-bottom {
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-bottom: 2px solid #41403e;
+}
 .border {
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
@@ -290,8 +317,7 @@ body {
 
 @font-face {
   font-family: "Neucha";
-  src: local("Neucha"), 
-  url(./fonts/Neucha-Regular.ttf) format("truetype");
+  src: local("Neucha"), url(./fonts/Neucha-Regular.ttf) format("truetype");
 }
 @font-face {
   font-family: "Patrick Hand SC";
@@ -301,6 +327,28 @@ body {
 
 label {
   font-size: 20px;
+}
+button {
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  transition: all 235ms ease 0s;
+  box-shadow: 15px 28px 25px -18px rgb(0 0 0 / 20%);
+  transition: all 235ms ease-in-out 0s;
+  align-self: center;
+  background: 0 0;
+  border: 2px solid #41403e;
+  color: #41403e;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  outline: 0;
+  padding: 0.5rem;
+}
+button:hover{transform:scale(1.1) translateZ(0);box-shadow:0 2px 4px 2px rgba(0,0,0,.15)}
+button:disabled {
+  opacity:.4;transform:none;box-shadow:none
 }
 * {
   font-family: "Neucha", sans-serif;
