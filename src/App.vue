@@ -25,6 +25,9 @@
     <div class="content-spaces">
       <RealTable />
     </div>
+    <div class="content-spaces">
+      <ApendiceC />
+    </div>
   </div>
 </template>
 
@@ -36,6 +39,7 @@ import SumBases from "./components/SumBases.vue";
 import ConvertBases from "./components/ConvertBases.vue";
 import MinMaxOf from "./components/MinMaxOf.vue";
 import RealTable from "./components/RealTable.vue";
+import ApendiceC from "./components/ApendiceC.vue";
 
 export default {
   name: "App",
@@ -47,6 +51,7 @@ export default {
     ConvertBases,
     MinMaxOf,
     RealTable,
+    ApendiceC
   },
 };
 </script>
