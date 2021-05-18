@@ -32,6 +32,6 @@ export const calcRealtTable = premRealTable => formatedEquations => {
             return operatePortLogic(prem1Bool, equation.operator, premRealTable[equation.p2][idx])
         })
 
-        return { ...acc, [getWrittenEquation(equation)]: result }
+        return { ...acc, [`(${getWrittenEquation(equation)})`]: result }
     }, {})
 }

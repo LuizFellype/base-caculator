@@ -133,14 +133,22 @@ export default {
       this.premisesResult = getPremiseRealTableByNumber(spltedPremises);
     },
     handleAddEquation() {
-      const { value1, selectedOperator, value2, equationsResult, premisesResult } = this;
-
-      this.equationsResult = {
+      const {
+        value1,
+        selectedOperator,
+        value2,
+        equationsResult,
+        allResults,
+      } = this;
+      
+      const newTable = calcRealtTable(allResults)([
+        { p1: value1, operator: selectedOperator, p2: value2 },
+      ]);
+      const result = {
         ...equationsResult,
-        ...calcRealtTable(premisesResult)([
-          { p1: value1, operator: selectedOperator, p2: value2 },
-        ]),
+        ...newTable,
       };
+      this.equationsResult = result;
     },
   },
 };

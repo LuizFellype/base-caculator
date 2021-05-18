@@ -14,7 +14,7 @@ test('Calculate real table', () => {
     const equation = { p1: 'a', operator: operators['^'], p2: 'b' }
     expect(calcRealtTable(premisesTable)([equation])).toEqual(
         { 
-            [getWrittenEquation(equation)]: [true, false, false, false], 
+            [`(${getWrittenEquation(equation)})`]: [true, false, false, false], 
         },
     );
 });
