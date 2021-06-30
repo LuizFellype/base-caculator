@@ -96,6 +96,9 @@ body {
 .p-15 {
   padding: 15px;
 }
+.pl-5 {
+  padding: 5px;
+}
 .px-10 {
   padding-left: 10px;
   padding-right: 10px;

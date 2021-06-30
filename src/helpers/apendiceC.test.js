@@ -1,62 +1,61 @@
 import {
     sum16,
 } from "./sum";
+import bases from "base-converter";
 import * as R from "ramda";
 
 import { translateApC } from "./apendiceC";
 
 const instructions = {
-    '11A1': '(LOAD) Carrega o registrador 1 com o padrão de bits encontrado na célula de memória no endereço A1',
-    '12A2': '(LOAD) Carrega o registrador 2 com o padrão de bits encontrado na célula de memória no endereço A2',
-    '2043': '(LOAD) Carrega o valor 43 no registrador 0',
-    '30A3': '(STORE) Armazena o conteúdo do registrador 0 na célula de memória de endereço A3.',
-    '40A4': '(MOVE) Copia o conteúdo do registrador A no registrador 4',
-    '5012': '(ADD) Soma(binários) o conteúdo dos registradores 1 e 2 e salva no registrador 0.',
-    '634E': '(ADD) Soma(ponto flutuante) o conteúdo dos registradores 4 e E e salva no registrador 3.',
+    '11A1': '(LOAD) Reg 1 = Memo A1',
+    '12A2': '(LOAD) Reg 2 = Memo A2',
+    '2043': '(LOAD) Reg 0 = 43',
+    '30A3': '(STORE) Memo A3 = Reg 0',
+    '40A4': '(MOVE(copy)) Reg 4 = Reg A',
+    '5012': '(ADD) Reg 0 = Bin(Reg 1) + Bin(Reg 2)',
+    '634E': '(ADD) Reg 3 = Bin(Reg 4) + Bin(Reg E)',
     'C000': '(HALT) Para o programa.'
 }
 
 
-test('Translate Apendice C instructions', () => {
-    expect(translateApC('11A1')).toEqual(instructions['11A1']);
-    expect(translateApC('12A2')).toEqual(instructions['12A2']);
-    expect(translateApC('2043')).toEqual(instructions['2043']);
-    expect(translateApC('30A3')).toEqual(instructions['30A3']);
-    expect(translateApC('40A4')).toEqual(instructions['40A4']);
-    expect(translateApC('5012')).toEqual(instructions['5012']);
-    expect(translateApC('634E')).toEqual(instructions['634E']);
-    expect(translateApC('C000')).toEqual(instructions['C000']);
+// test('Translate Apendice C instructions', () => {
+//     expect(translateApC('11A1')).toEqual(instructions['11A1']);
+//     expect(translateApC('12A2')).toEqual(instructions['12A2']);
+//     expect(translateApC('2043')).toEqual(instructions['2043']);
+//     expect(translateApC('30A3')).toEqual(instructions['30A3']);
+//     expect(translateApC('40A4')).toEqual(instructions['40A4']);
+//     expect(translateApC('5012')).toEqual(instructions['5012']);
+//     expect(translateApC('634E')).toEqual(instructions['634E']);
+//     expect(translateApC('C000')).toEqual(instructions['C000']);
 
-});
+// });
 
 const getMemoryTable = (firstMemoryAddressName, memories) => {
     return memories.reduce((acc, memory, idx) => {
-        const memoryKey = sum16(firstMemoryAddressName, idx)
+        const memoryKey = sum16(firstMemoryAddressName, bases.decToHex(idx))
 
         return { ...acc, [memoryKey]: memory }
     }, {})
 }
 
-const memories = ['15', '6C', '16', '6D', '50', '56', '30', '6E', 'C0', '00']
-const memoryTable = {
-    'A0': '15',
-    'A1': '6C',
-    'A2': '16',
-    'A3': '6D',
-    'A4': '50',
-    'A5': '56',
-    'A6': '30',
-    'A7': '6E',
-    'A8': 'C0',
-    'A9': '00',
-}
-const memoryTableNormalized = {
-    'A0': '156C',
-    'A2': '166D',
-    'A4': '5056',
-    'A6': '306E',
-    'A8': 'C000',
-}
+
+test('Mount Apendice C table', () => {
+    const memories = ['15', '6C', '16', '6D', '50', '56', '30', '6E', 'C0', '00',]
+    const memoryTable = {
+        'A0': '15',
+        'A1': '6C',
+        'A2': '16',
+        'A3': '6D',
+        'A4': '50',
+        'A5': '56',
+        'A6': '30',
+        'A7': '6E',
+        'A8': 'C0',
+        'A9': '00',
+    }
+
+    expect(getMemoryTable('A0', memories)).toEqual(memoryTable);
+});
 
 const runApendiceC = (memoryTable, initicalRegistrators = {}) => { // TODO: normalize table
     const memoryNormalizedEntries = Object.entries(memoryTableNormalized)
@@ -71,9 +70,17 @@ const runApendiceC = (memoryTable, initicalRegistrators = {}) => { // TODO: norm
         if (acc.hasStoped) return acc
 
         const writtenCommand = translateApC(apCCommnad)
-        const ci = sum16(memoryAddress, 2)
 
         const [operationCode, registrator, x, y] = apCCommnad
+
+        if (operationCode === 'B') {
+            if (acc.registrators[registrator] == acc.registrators['0']) {
+
+                return {}
+            }
+        }
+        const ci = sum16(memoryAddress, 2)
+
         const executionByOperationCode = {
             '1': { registrators: { [registrator]: memoryTable[`${x}${y}`] || '1' } },
             '2': { registrators: { [registrator]: `${x}${y}` } },
@@ -102,53 +109,107 @@ const runApendiceC = (memoryTable, initicalRegistrators = {}) => { // TODO: norm
     return apCExecuted
 }
 
-test('Resolve and store history of Apendice C execution', () => {
-    expect(getMemoryTable('A0', memories)).toEqual(memoryTable);
+const memoriesSum = ['20', '02', '21', '00', '22', '01', 'B1', '3C', '51', '12', 'B0', '36', 'C0', '00',]
+const memoriesSumTable = {
+    "30": "20",
+    "31": "02",
+    "32": "21",
+    "33": "00",
+    "34": "22",
+    "35": "01",
+    "36": "B1",
+    "37": "3C",
+    "38": "51",
+    "39": "12",
+    "3A": "B0",
+    "3B": "36",
+    "3C": "C0",
+    "3D": "00",
+}
+const normalizeMemoriesTable = (memoriesTable) => {
+    const memoTableEntries = Object.entries(memoriesTable)
+    const splittedIn2 = R.splitEvery(2, memoTableEntries)
 
-    // sum two numbers
-    expect(runApendiceC(memoryTable)).toEqual({
-        memories: {
-            "6E": "2",
-            "A0": "15",
-            "A1": "6C",
-            "A2": "16",
-            "A3": "6D",
-            "A4": "50",
-            "A5": "56",
-            "A6": "30",
-            "A7": "6E",
-            "A8": "C0",
-            "A9": "00",
-        },
-        registrators: {
-            "0": "2",
-            "5": "1",
-            "6": "1",
-        },
-        history: [
-            {
-                "command": "156C",
-                "writtenCommand": "(LOAD) Carrega o registrador 5 com o padrão de bits encontrado na célula de memória no endereço 6C",
-            },
-            {
-                "command": "166D",
-                "writtenCommand": "(LOAD) Carrega o registrador 6 com o padrão de bits encontrado na célula de memória no endereço 6D",
-            },
-            {
-                "command": "5056",
-                "writtenCommand": "(ADD) Soma(binários) o conteúdo dos registradores 5 e 6 e salva no registrador 0."
-            },
-            {
-                "command": "306E",
-                "writtenCommand": "(STORE) Armazena o conteúdo do registrador 0 na célula de memória de endereço 6E.",
-            },
-            {
-                "command": "C000",
-                "writtenCommand": "(HALT) Para o programa."
-            },
-        ],
-        ci: 'AA',
-        hasStoped: true,
-    });
-    // expect(normalizeMemoryTable(memoryTable)).toEqual(memoryTableNormalized);
+    const memoryTableNormalized = splittedIn2.reduce((acc, item) => {
+        const [[firstKey, firstHalfCommandValue], [secondKey, secondHalfCommandValue]] = item
+
+        return { ...acc, [firstKey]: `${firstHalfCommandValue}${secondHalfCommandValue}` }
+    }, {})
+    
+    return memoryTableNormalized
+}
+test('Normalize memories table', () => {
+    expect(normalizeMemoriesTable(memoriesSumTable)).toEqual({
+        '30': '2002',
+        '32': '2100',
+        '34': '2201',
+        '36': 'B13C',
+        '38': '5112',
+        '3A': 'B036',
+        '3C': 'C000',
+    })
+})
+
+test('Resolve and store history of Apendice C execution', () => {
+    // expect(getMemoryTable('30', memoriesSum)).toEqual(memoriesSumTable)
+
+
+    const validateToEnd = {
+        "command": "B13C",
+        "writtenCommand": translateApC("B13C"),
+        // "ci": '36'
+    }
+    const sum = {
+        "command": "5112",
+        "writtenCommand": translateApC("5112"),
+        // "ci": '38'
+    }
+    const returnToValidation = {
+        "command": "B036",
+        "writtenCommand": translateApC("B036"),
+        // "ci": '3A'
+    }
+
+    // expect(runApendiceC('30', memoriesSumTable))
+    //     .toEqual({
+    //         memories: memoriesSumTable,
+    //         registrators: {
+    //             "0": "02",
+    //             "1": "02",
+    //             "2": "01",
+    //         },
+    //         history: [
+    //             {
+    //                 "command": "2002",
+    //                 "writtenCommand": translateApC("2002"),
+    //                 // "ci": '30'
+    //             },
+    //             {
+    //                 "command": "2100",
+    //                 "writtenCommand": translateApC("2100"),
+    //                 // "ci": '32'
+    //             },
+    //             {
+    //                 "command": "2201",
+    //                 "writtenCommand": translateApC("2201"),
+    //                 // "ci": '34'
+    //             },
+    //             validateToEnd,
+    //             sum,
+    //             returnToValidation,
+    //             validateToEnd,
+    //             sum,
+    //             returnToValidation,
+    //             validateToEnd,
+    //             {
+    //                 "command": "C000",
+    //                 "writtenCommand": translateApC("C000"),
+    //                 // "ci": '3E'
+    //             },
+
+    //         ],
+    //         // ci: 'AA',
+    //         hasStoped: true,
+    //     });
+
 });

@@ -1,5 +1,14 @@
 <template>
-  <h2>TABELA VERDADE</h2>
+  <div class="d-flex center">
+    <h2>TABELA VERDADES</h2>
+    <a
+      class="pl-5 scale"
+      target="_blank"
+      rel="noopener noreferrer" 
+      href="https://edufaesa-my.sharepoint.com/:f:/g/personal/luiz_fellype_aluno_faesa_br/Eo7Th6lCgB1Hntm9Kk6IEdQBwPXpqIdIP9CYN-zMfhDjow?e=eErrfz"
+      >INFO</a
+    >
+  </div>
   <div class="scale">
     <form @submit.prevent="handleEnter" class="card shake">
       <div class="inline-between">

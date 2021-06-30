@@ -32,6 +32,7 @@ export const sumBase = (base) => {
             const yInDec = bases.hexToDec(y)
             
             const sumResult =  Number(xInDec) + Number(yInDec)
+            
             return bases.decToHex(sumResult).toUpperCase()
         }
     }
